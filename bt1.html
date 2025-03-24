@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+        <style>
+        .total {
+            position: relative;
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 8px;
+            width: 300px;
+        }
+        input {
+            border: none;
+            outline: none;
+            flex: 1;
+            padding-right: 30px;
+        }
+        .icon {
+            position: absolute;
+            right: 10px;
+            cursor: pointer;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="total">
+            <input type="password" id="password"
+                placeholder="Enter your password">
+            <i id="hidePassword" class="fa-solid fa-eye icon"></i>
+        </div>
+        <script>
+        let passwordInput = document.getElementById('password');
+        let hidePassword = document.getElementById('hidePassword');
+
+        hidePassword.addEventListener('click', () => {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                hidePassword.classList.remove('fa-eye');
+                hidePassword.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                hidePassword.classList.remove('fa-eye-slash');
+                hidePassword.classList.add('fa-eye');
+            }
+        });
+    </script>
+    </body>
+</html>

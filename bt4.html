@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #searchButton {
+            padding: 10px 15px;
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #searchButton:hover {
+            background-color: darkgreen;
+        }
+
+        .product-list {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            flex-wrap: wrap; 
+        }
+        .product {
+            flex: 1;
+            max-width: 180px;
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .product h3 {
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        .product p {
+            font-size: 12px;
+            color: #555;
+        }
+
+        .product .price {
+            font-size: 14px;
+            color: red;
+            font-weight: bold;
+        }
+        .product .buy-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: blue;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .product .buy-btn:hover {
+            background-color: darkblue;
+        }
+
+    </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="search-container">
+                <input type="text" id="searchInput"
+                    placeholder="Tìm kiếm sản phẩm...">
+                <button id="searchButton">Search</button>
+            </div>
+            <div id="productList" class="product-list"></div>
+        </div>
+    </body>
+    <script>
+        const products = [
+    {
+        id: 1,
+        name: 'Laptop Dell XPS 15',
+        price: 35990000,
+        image: 'https://th.bing.com/th/id/R.e105c2b241c84037a4d231e8510e9088?rik=YgbbYeUfZjXikQ&riu=http%3a%2f%2fwww.windowscentral.com%2fsites%2fwpcentral.com%2ffiles%2fstyles%2flarger_wm_blb%2fpublic%2ffield%2fimage%2f2016%2f08%2fdell-xps-15-fhd-hero1.jpg%3fitok%3dX_ayMrAj&ehk=9RXaL9eusiqPPwL3%2fZY5Q2dzDty7obZ76nxahFLteoo%3d&risl=&pid=ImgRaw&r=0',
+        description: 'Laptop cao cấp với màn hình 15 inch, CPU Intel Core i7 và RAM 16GB.'
+    },
+    {
+        id: 2,
+        name: 'iPhone 15 Pro Max',
+        price: 39990000,
+        image: 'https://th.bing.com/th/id/OIP.kcYwhwJHJq7NwUSSutnGZQHaEK?rs=1&pid=ImgDetMain',
+        description: 'Điện thoại flagship của Apple với camera 48MP và chip A17 Pro.'
+    },
+    {
+        id: 3,
+        name: 'Samsung Galaxy S24 Ultra',
+        price: 32990000,
+        image: 'https://th.bing.com/th/id/R.6f635cac252c484ef5447c8a3b202c7b?rik=ivxZeac3t0h98g&pid=ImgRaw&r=0',
+        description: 'Màn hình rộng nét với bút S-Pen và camera siêu zoom.'
+    },
+    {
+        id: 4,
+        name: 'Tai nghe Sony WH-1000XM5',
+        price: 8990000,
+        image: 'https://th.bing.com/th/id/R.4cabf12d4643baa3ea294cf51c748a70?rik=9SPaJcoYGiNhTg&pid=ImgRaw&r=0',
+        description: 'Tai nghe chống ồn cao cấp với âm thanh chất lượng.'
+    },
+    {
+        id: 5,
+        name: 'Apple Watch Series 9',
+        price: 10990000,
+        image: 'https://images.cgames.de/images/gamestar/4/apple-watch-9-hub-teaser-charnsitr-stockadobecom_6234140.jpg',
+        description: 'Đồng hồ thông minh với tính năng đo nhịp tim và hỗ trợ thể thao.'
+    },
+    {
+        id: 6,
+        name: 'Loa JBL Charge 5',
+        price: 3990000,
+        image: 'https://th.bing.com/th/id/OIP.2tf4-eAfA13hWBB70xesDgHaEX?rs=1&pid=ImgDetMain',
+        description: 'Loa Bluetooth chống nước với âm bass mạnh mẽ và pin lên đến 20 giờ.'
+    }
+];
+
+const productList = document.getElementById('productList');
+const searchInput = document.getElementById('searchInput');
+const searchButton = document.getElementById('searchButton');
+
+// Hàm hiển thị danh sách sản phẩm
+function renderProducts(products) {
+    productList.innerHTML = '';
+    products.forEach(product => {
+        const productDiv = document.createElement('div');
+        productDiv.classList.add('product');
+        productDiv.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
+            <p class="price">${product.price.toLocaleString()} VND</p>
+            <button class="buy-btn">Buy</button>
+        `;
+        productList.appendChild(productDiv);
+    });
+}
+
+renderProducts(products);
+    </script>
+</html>

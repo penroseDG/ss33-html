@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    </head>
+    <body>
+        <label>
+            <select id="category">
+                <option value="all">-- Lựa chọn danh mục --</option>
+                <option value="Đồ ăn">Đồ ăn</option>
+                <option value="Nước">Nước</option>
+                <option value="Dụng cụ">Dụng cụ</option>
+            </select>
+            <button onclick="filterProducts()">Lọc</button>
+        </label>
+        <ul id="productList"></ul>
+        <script>
+            const dish = [
+                { name: 'Rau sạch', category: 'Đồ ăn' },
+                { name: 'Thịt lợn', category: 'Đồ ăn' },
+                { name: 'Pepsi không calo', category: 'Nước' },
+                { name: 'CocaCola', category: 'Nước' },
+                { name: 'Cờ lê', category: 'Dụng cụ' },
+                { name: 'Tua vít', category: 'Dụng cụ' },
+            ];
+            let productList = document.getElementById('productList');
+            let categorySelect = document.getElementById('category');
+
+            function renderProducts(dish) {
+                let html = '';
+                for (let item of dish) {
+                    html += `<li><strong>Tên sản phẩm:</strong> ${item.name} - <strong>Danh mục:</strong> ${item.category}</li>`;
+                }
+                productList.innerHTML = html;
+            }
+
+            function filterProducts() {
+                let filter;
+                let selectCategory = categorySelect.value;
+                if (selectCategory === 'all') {
+                    filter = dish;
+                } else {
+                    filter = dish.filter(item => item.category === selectCategory);
+                }
+                renderProducts(filter);
+            }
+            renderProducts(dish);
+        </script>
+    </body>
+</html>

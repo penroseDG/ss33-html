@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <textarea name="input" id="input"></textarea>
+        <br>
+        <p id="number"> 0 ky tu </p>
+        <br>
+        <button id="check">Check</button>
+    </body>
+   <script>
+        let checkButton = document.getElementById('check');
+        let input = document.getElementById('input');
+        let number = document.getElementById('number');
+
+        checkButton.addEventListener('click', () => {
+            number.textContent = `${input.value.length} ky tu `;
+        });
+    </script>
+    </script>
+</html>
